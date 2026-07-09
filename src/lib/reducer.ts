@@ -192,6 +192,9 @@ function applyNote(state: State, ev: CrumEvent, verb: string, data: Record<strin
   } else if (verb === 'archive') {
     rec.archived = true
     touch(rec, ev)
+  } else if (verb === 'restore') {
+    rec.archived = false
+    touch(rec, ev)
   }
 }
 
@@ -254,9 +257,9 @@ export function entitiesOfKind(state: State, kind: EntityKind, includeArchived =
     .sort((a, b) => (b.updatedAt < a.updatedAt ? -1 : 1))
 }
 
-export function notesForTarget(state: State, targetId: string): NoteRecord[] {
+export function notesForTarget(state: State, targetId: string, includeArchived = false): NoteRecord[] {
   return Object.values(state.notes)
-    .filter((n) => n.target === targetId && !n.archived)
+    .filter((n) => n.target === targetId && (includeArchived || !n.archived))
     .sort((a, b) => (a.createdAt < b.createdAt ? 1 : -1)) // newest first
 }
 

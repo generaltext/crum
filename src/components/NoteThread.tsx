@@ -56,7 +56,10 @@ function Note({ note }: { note: NoteRecord }) {
   const { state, dispatch } = useStore()
   const comments = commentsForNote(state, note.id)
   return (
-    <div className="rounded-lg border" style={{ borderColor: 'var(--border)', background: 'var(--panel)' }}>
+    <div
+      className="rounded-md border"
+      style={{ borderColor: 'var(--border)', background: 'var(--panel)', opacity: note.archived ? 0.65 : 1 }}
+    >
       <div className="p-3">
         <div className="mb-2 flex items-center gap-2">
           <Avatar actor={note.createdBy} size={20} />
@@ -64,14 +67,26 @@ function Note({ note }: { note: NoteRecord }) {
           <span className="text-xs" style={{ color: 'var(--muted)' }}>
             {relativeTime(note.createdAt)}
           </span>
-          <button
-            type="button"
-            title="Archive note"
-            onClick={() => void dispatch({ type: 'note.archive', subject: note.id })}
-            className="ml-auto opacity-40 hover:opacity-100"
-          >
-            <Icon name="Archive" size={14} />
-          </button>
+          {note.archived && <span className="badge-archived">Archived</span>}
+          {note.archived ? (
+            <button
+              type="button"
+              onClick={() => void dispatch({ type: 'note.restore', subject: note.id })}
+              className="ml-auto text-xs font-medium"
+              style={{ color: 'var(--accent)' }}
+            >
+              Restore
+            </button>
+          ) : (
+            <button
+              type="button"
+              title="Archive note"
+              onClick={() => void dispatch({ type: 'note.archive', subject: note.id })}
+              className="ml-auto opacity-40 hover:opacity-100"
+            >
+              <Icon name="Archive" size={14} />
+            </button>
+          )}
         </div>
         <MentionText body={note.body} className="text-sm" />
       </div>
@@ -95,22 +110,27 @@ function Note({ note }: { note: NoteRecord }) {
         </div>
       )}
 
-      <div className="border-t px-3 py-3" style={{ borderColor: 'var(--border)' }}>
-        <Composer
-          placeholder="Reply…"
-          submitOnEnter
-          onSave={(body) =>
-            void dispatch({ type: 'comment.create', subject: newId('cmt'), data: { note: note.id, body } })
-          }
-        />
-      </div>
+      {!note.archived && (
+        <div className="border-t px-3 py-3" style={{ borderColor: 'var(--border)' }}>
+          <Composer
+            placeholder="Reply…"
+            submitOnEnter
+            onSave={(body) =>
+              void dispatch({ type: 'comment.create', subject: newId('cmt'), data: { note: note.id, body } })
+            }
+          />
+        </div>
+      )}
     </div>
   )
 }
 
 export function NoteThread({ targetId }: { targetId: string }) {
   const { state, dispatch } = useStore()
-  const notes = notesForTarget(state, targetId)
+  const [showArchived, setShowArchived] = useState(false)
+  const active = notesForTarget(state, targetId)
+  const archivedCount = notesForTarget(state, targetId, true).length - active.length
+  const visible = showArchived ? notesForTarget(state, targetId, true) : active
   return (
     <div className="space-y-4">
       <Composer
@@ -120,12 +140,22 @@ export function NoteThread({ targetId }: { targetId: string }) {
           void dispatch({ type: 'note.create', subject: newId('note'), data: { target: targetId, body } })
         }
       />
-      {notes.length === 0 ? (
+      {archivedCount > 0 && (
+        <button
+          type="button"
+          onClick={() => setShowArchived((v) => !v)}
+          className="flex items-center gap-1.5 text-xs"
+          style={{ color: showArchived ? 'var(--accent)' : 'var(--muted)' }}
+        >
+          <Icon name="Archive" size={13} /> {showArchived ? 'Hide' : 'Show'} {archivedCount} archived
+        </button>
+      )}
+      {visible.length === 0 ? (
         <p className="py-4 text-center text-sm" style={{ color: 'var(--muted)' }}>
           No notes yet. Capture your first conversation above.
         </p>
       ) : (
-        notes.map((n) => <Note key={n.id} note={n} />)
+        visible.map((n) => <Note key={n.id} note={n} />)
       )}
     </div>
   )

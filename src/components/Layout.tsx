@@ -40,7 +40,10 @@ export function Layout() {
       >
         <div className="flex items-center gap-2 px-4 py-4">
           <span className="flex h-7 w-7 items-center justify-center rounded-md" style={{ background: 'var(--accent-soft)', color: 'var(--accent)' }}>
-            <Icon name="Users" size={16} />
+            <svg viewBox="0 0 24 24" fill="currentColor" width={18} height={18} aria-hidden>
+              <path d="M2.9 13.7 L4.8 9.7 L9.1 8.5 L13.1 10.7 L13.6 15.5 L9.7 19.4 L4.6 19 Z" />
+              <path d="M16.4 5.8 L19.2 4.6 L21.1 6.7 L19.7 8.9 L17 8.3 Z" />
+            </svg>
           </span>
           <span className="text-lg font-semibold tracking-tight">CRUM</span>
         </div>

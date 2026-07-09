@@ -10,6 +10,15 @@ body,
   height: 100%;
 }
 
+/* Tailwind v4 preflight defaults every border to currentColor (the bright text
+   color). Default to the subtle border token instead; utilities like
+   border-[color] and inline borderColor still win. */
+*,
+::before,
+::after {
+  border-color: var(--border);
+}
+
 body {
   margin: 0;
   font-family:
@@ -101,6 +110,31 @@ body {
 }
 .tag-teal {
   --tc: #0d9488;
+}
+
+/* dense, table-like row lists. Explicit border token (NOT Tailwind's divide-y,
+   whose v4 default is currentColor → the bright text color) and a tight radius. */
+.rowlist {
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  overflow: hidden;
+  background: var(--panel);
+}
+.rowlist > * + * {
+  border-top: 1px solid var(--border);
+}
+
+.badge-archived {
+  flex: none;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--muted);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 1px 5px;
+  line-height: 1.4;
 }
 
 /* contenteditable placeholder */

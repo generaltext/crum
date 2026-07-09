@@ -38,9 +38,9 @@ export function TagsView() {
       {label && (
         <section>
           <h2 className="mb-2 text-sm font-semibold">Tagged “{label}”</h2>
-          <ul className="divide-y overflow-hidden rounded-lg border" style={{ borderColor: 'var(--border)', background: 'var(--panel)' }}>
+          <ul className="rowlist">
             {entitiesWithTag(state, label).map((e) => (
-              <li key={e.id} className="flex items-center gap-2 px-4 py-2.5 text-sm">
+              <li key={e.id} className="flex items-center gap-2 px-3 py-1.5 text-sm">
                 <Icon name={KINDS[e.kind].icon as IconName} size={15} style={{ color: 'var(--muted)' }} />
                 <EntityLink id={e.id} label={String(e.fields[titleField(e.kind)] ?? '')} />
                 <span className="ml-auto text-xs" style={{ color: 'var(--muted)' }}>

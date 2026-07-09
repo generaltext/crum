@@ -17,6 +17,7 @@ interface Popup {
   end: number // caret offset within the anchor text node
   node: Text
   rect: { left: number; top: number }
+  query: string // the current @query, so re-detection can preserve the active index
 }
 
 function buildInitialDom(el: HTMLElement, value: string) {
@@ -121,14 +122,17 @@ export function MentionInput({
     const items = search(query)
     const range = sel.getRangeAt(0).cloneRange()
     const rect = range.getBoundingClientRect()
-    setPopup({
+    // Preserve the highlighted item while navigating: re-detection fires on every
+    // keyup (arrows included), so only reset to the top when the query changed.
+    setPopup((prev) => ({
       items,
-      active: 0,
+      active: prev && prev.query === query ? Math.min(prev.active, Math.max(0, items.length - 1)) : 0,
       start: sel.anchorOffset - query.length - 1, // the '@'
       end: sel.anchorOffset,
       node: node as Text,
       rect: { left: rect.left, top: rect.bottom },
-    })
+      query,
+    }))
   }
 
   function choose(match: Match) {

@@ -34,17 +34,21 @@ export function EntityListPage({ kind }: { kind: EntityKind }) {
   const [query, setQuery] = useState('')
   const [creating, setCreating] = useState(false)
   const [name, setName] = useState('')
+  const [showArchived, setShowArchived] = useState(false)
 
   const resolve = (id: string) => String(state.entities[id]?.fields[titleField(state.entities[id]!.kind)] ?? '')
 
-  const all = entitiesOfKind(state, kind)
+  const withArchived = entitiesOfKind(state, kind, true)
+  const all = withArchived.filter((e) => !e.archived)
+  const archivedCount = withArchived.length - all.length
+  const source = showArchived ? withArchived : all
   const q = query.trim().toLowerCase()
   const rows = q
-    ? all.filter((r) => {
+    ? source.filter((r) => {
         const title = String(r.fields[titleField(kind)] ?? '').toLowerCase()
         return title.includes(q) || r.tags.some((t) => t.toLowerCase().includes(q))
       })
-    : all
+    : source
 
   const submitCreate = async () => {
     if (!name.trim()) return setCreating(false)
@@ -62,6 +66,16 @@ export function EntityListPage({ kind }: { kind: EntityKind }) {
           {all.length}
         </span>
         <div className="ml-auto flex items-center gap-2">
+          {archivedCount > 0 && (
+            <button
+              type="button"
+              onClick={() => setShowArchived((v) => !v)}
+              className="flex items-center gap-1.5 rounded-md px-2 py-1.5 text-xs hover:bg-[var(--hover)]"
+              style={{ color: showArchived ? 'var(--accent)' : 'var(--muted)' }}
+            >
+              <Icon name="Archive" size={13} /> {showArchived ? 'Hide' : 'Show'} archived ({archivedCount})
+            </button>
+          )}
           <div className="relative">
             <Icon name="Search" size={14} className="absolute left-2.5 top-1/2 -translate-y-1/2" style={{ color: 'var(--muted)' }} />
             <input
@@ -113,33 +127,34 @@ export function EntityListPage({ kind }: { kind: EntityKind }) {
           }
         />
       ) : (
-        <ul className="divide-y overflow-hidden rounded-lg border" style={{ borderColor: 'var(--border)', background: 'var(--panel)' }}>
+        <ul className="rowlist">
           {rows.map((r) => {
             const title = String(r.fields[titleField(kind)] ?? '') || `Untitled ${def.singular}`
+            const sub = subtitle(r, resolve)
             return (
               <li key={r.id}>
                 <button
                   type="button"
                   onClick={() => navigate(`/e/${r.id}`)}
-                  className="flex w-full items-center gap-3 px-4 py-3 text-left hover:bg-[var(--hover)]"
+                  className="flex w-full items-center gap-2.5 px-3 py-1.5 text-left text-sm hover:bg-[var(--hover)]"
+                  style={r.archived ? { opacity: 0.6 } : undefined}
                 >
-                  <div className="min-w-0 flex-1">
-                    <div className="flex items-center gap-2">
-                      <span className="truncate font-medium">{title}</span>
-                      {r.tags.map((t) => (
-                        <TagChip key={t} label={t} color={tagColor(t, config)} />
-                      ))}
-                    </div>
-                    {subtitle(r, resolve) && (
-                      <div className="truncate text-sm" style={{ color: 'var(--muted)' }}>
-                        {subtitle(r, resolve)}
-                      </div>
+                  <span className="max-w-[46%] flex-none truncate font-medium">{title}</span>
+                  <div className="flex min-w-0 flex-1 items-center gap-1.5 overflow-hidden">
+                    {r.archived && <span className="badge-archived">Archived</span>}
+                    {r.tags.map((t) => (
+                      <TagChip key={t} label={t} color={tagColor(t, config)} />
+                    ))}
+                    {sub && (
+                      <span className="truncate text-[13px]" style={{ color: 'var(--muted)' }}>
+                        {sub}
+                      </span>
                     )}
                   </div>
-                  <span className="shrink-0 text-xs" style={{ color: 'var(--muted)' }}>
+                  <span className="shrink-0 text-xs tabular-nums" style={{ color: 'var(--muted)' }}>
                     {relativeTime(r.updatedAt)}
                   </span>
-                  <Avatar actor={r.updatedBy} size={20} />
+                  <Avatar actor={r.updatedBy} size={18} />
                 </button>
               </li>
             )

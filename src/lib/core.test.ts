@@ -76,6 +76,17 @@ describe('reducer', () => {
     expect(commentsForNote(s, 'note_1')[0]!.body).toBe('Reply')
   })
 
+  it('archives and restores notes; includeArchived controls visibility', () => {
+    const s = emptyState()
+    applyEvent(s, ev({ type: 'person.create', subject: 'per_1', data: { name: 'Ada' } }))
+    applyEvent(s, ev({ type: 'note.create', subject: 'note_1', data: { target: 'per_1', body: 'x' } }))
+    applyEvent(s, ev({ type: 'note.archive', subject: 'note_1' }))
+    expect(notesForTarget(s, 'per_1')).toHaveLength(0)
+    expect(notesForTarget(s, 'per_1', true)).toHaveLength(1)
+    applyEvent(s, ev({ type: 'note.restore', subject: 'note_1' }))
+    expect(notesForTarget(s, 'per_1')).toHaveLength(1)
+  })
+
   it('tracks deal stage changes with history', () => {
     const s = emptyState()
     applyEvent(s, ev({ type: 'deal.create', subject: 'deal_1', data: { title: 'D', stage: 'lead' } }))
