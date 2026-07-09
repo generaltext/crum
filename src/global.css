@@ -1,0 +1,117 @@
+@import 'tailwindcss';
+
+:root {
+  color-scheme: light dark;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family:
+    ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  background: var(--bg);
+  color: var(--fg);
+}
+
+/* Calm neutral surfaces, amber accent, auto light/dark. */
+:root {
+  --bg: #fafaf9;
+  --panel: #ffffff;
+  --fg: #1c1917;
+  --muted: #78716c;
+  --border: #e7e5e4;
+  --hover: #f5f5f4;
+  --accent: #b45309;
+  --accent-soft: #fef3c7;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #1c1917;
+    --panel: #262322;
+    --fg: #f5f5f4;
+    --muted: #a8a29e;
+    --border: #3a3634;
+    --hover: #302c2a;
+    --accent: #fbbf24;
+    --accent-soft: #422006;
+  }
+}
+
+/* ── mention chips (rendered + editor) ─────────────────────────────────────── */
+.mention {
+  display: inline;
+  color: var(--accent);
+  background: color-mix(in srgb, var(--accent) 12%, transparent);
+  border-radius: 4px;
+  padding: 0 3px;
+  font-weight: 500;
+  white-space: nowrap;
+  cursor: pointer;
+}
+.mention:hover {
+  background: color-mix(in srgb, var(--accent) 22%, transparent);
+}
+
+/* ── tag chips ─────────────────────────────────────────────────────────────── */
+.tag {
+  --tc: #78716c;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 12px;
+  line-height: 1;
+  padding: 3px 8px;
+  border-radius: 999px;
+  color: var(--tc);
+  background: color-mix(in srgb, var(--tc) 13%, transparent);
+  border: 1px solid color-mix(in srgb, var(--tc) 25%, transparent);
+  white-space: nowrap;
+}
+@media (prefers-color-scheme: dark) {
+  .tag {
+    color: color-mix(in srgb, var(--tc) 55%, white);
+  }
+}
+.tag-amber {
+  --tc: #d97706;
+}
+.tag-blue {
+  --tc: #2563eb;
+}
+.tag-green {
+  --tc: #16a34a;
+}
+.tag-violet {
+  --tc: #7c3aed;
+}
+.tag-rose {
+  --tc: #e11d48;
+}
+.tag-cyan {
+  --tc: #0891b2;
+}
+.tag-orange {
+  --tc: #ea580c;
+}
+.tag-teal {
+  --tc: #0d9488;
+}
+
+/* contenteditable placeholder */
+[data-placeholder]:empty::before {
+  content: attr(data-placeholder);
+  color: var(--muted);
+  pointer-events: none;
+}
+
+/* thin scrollbars */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--border) transparent;
+}
