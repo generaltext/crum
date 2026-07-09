@@ -257,6 +257,20 @@ export function entitiesOfKind(state: State, kind: EntityKind, includeArchived =
     .sort((a, b) => (b.updatedAt < a.updatedAt ? -1 : 1))
 }
 
+export function linkedOfKind(
+  state: State,
+  entityId: string,
+  kind: EntityKind,
+  includeArchived = false,
+): EntityRecord[] {
+  const rec = state.entities[entityId]
+  if (!rec) return []
+  return rec.links
+    .map((id) => state.entities[id])
+    .filter((e): e is EntityRecord => !!e && e.kind === kind && (includeArchived || !e.archived))
+    .sort((a, b) => (b.updatedAt < a.updatedAt ? -1 : 1))
+}
+
 export function notesForTarget(state: State, targetId: string, includeArchived = false): NoteRecord[] {
   return Object.values(state.notes)
     .filter((n) => n.target === targetId && (includeArchived || !n.archived))

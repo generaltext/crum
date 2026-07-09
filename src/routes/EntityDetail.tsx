@@ -8,6 +8,7 @@ import { MentionInput } from '../components/MentionInput'
 import { MentionText } from '../components/MentionText'
 import { EntityLink } from '../components/EntityLink'
 import { NoteThread } from '../components/NoteThread'
+import { RelationField } from '../components/RelationField'
 import { TagEditor } from '../components/TagEditor'
 import { ActorStamp, Button, EmptyState } from '../components/common'
 import { Icon, type IconName } from '../components/Icon'
@@ -248,6 +249,16 @@ export function EntityDetail() {
           ))}
         </section>
       )}
+
+      {/* Relations (many-to-many, e.g. a person's organizations) */}
+      {def.relations?.map((rel) => (
+        <section key={rel.kind} className="mb-5">
+          <h3 className="mb-1.5 text-xs font-semibold uppercase tracking-wide" style={{ color: 'var(--muted)' }}>
+            {rel.label}
+          </h3>
+          <RelationField entityId={id} targetKind={rel.kind} />
+        </section>
+      ))}
 
       {/* Rich fields */}
       {richFields.map((f) => (

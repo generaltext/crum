@@ -5,6 +5,7 @@ import {
   commentsForNote,
   emptyState,
   entitiesOfKind,
+  linkedOfKind,
   notesForTarget,
 } from './reducer'
 import { appendLine, foldTail } from './log'
@@ -85,6 +86,22 @@ describe('reducer', () => {
     expect(notesForTarget(s, 'per_1', true)).toHaveLength(1)
     applyEvent(s, ev({ type: 'note.restore', subject: 'note_1' }))
     expect(notesForTarget(s, 'per_1')).toHaveLength(1)
+  })
+
+  it('links people and orgs many-to-many, bidirectionally', () => {
+    const s = emptyState()
+    applyEvent(s, ev({ type: 'person.create', subject: 'per_1', data: { name: 'Ada' } }))
+    applyEvent(s, ev({ type: 'org.create', subject: 'org_1', data: { name: 'Acme' } }))
+    applyEvent(s, ev({ type: 'org.create', subject: 'org_2', data: { name: 'Northwind' } }))
+    applyEvent(s, ev({ type: 'link.add', subject: 'per_1', data: { to: 'org_1' } }))
+    applyEvent(s, ev({ type: 'link.add', subject: 'per_1', data: { to: 'org_2' } }))
+    // person sees both orgs; each org sees the person (bidirectional)
+    expect(linkedOfKind(s, 'per_1', 'org').map((e) => e.id).sort()).toEqual(['org_1', 'org_2'])
+    expect(linkedOfKind(s, 'org_1', 'person').map((e) => e.id)).toEqual(['per_1'])
+    // removing from either side unlinks both
+    applyEvent(s, ev({ type: 'link.remove', subject: 'org_1', data: { to: 'per_1' } }))
+    expect(linkedOfKind(s, 'per_1', 'org').map((e) => e.id)).toEqual(['org_2'])
+    expect(linkedOfKind(s, 'org_1', 'person')).toHaveLength(0)
   })
 
   it('tracks deal stage changes with history', () => {

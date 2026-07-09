@@ -26,9 +26,15 @@ export async function seedDemo(dispatch: (d: Draft[]) => Promise<void>): Promise
     { type: 'org.create', subject: river, data: { name: 'Riverstone Foundation', location: 'Austin, TX', about: 'Grant-funded; nonprofit pricing applies.' } },
 
     // People
-    { type: 'person.create', subject: ada, data: { name: 'Ada Lovelace', role: 'Head of Research', org: acme, email: 'ada@acme.example' } },
-    { type: 'person.create', subject: grace, data: { name: 'Grace Hopper', role: 'CTO', org: northwind, email: 'grace@northwind.example' } },
-    { type: 'person.create', subject: linus, data: { name: 'Linus Rivera', role: 'Program Director', org: river } },
+    { type: 'person.create', subject: ada, data: { name: 'Ada Lovelace', role: 'Head of Research', email: 'ada@acme.example' } },
+    { type: 'person.create', subject: grace, data: { name: 'Grace Hopper', role: 'CTO', email: 'grace@northwind.example' } },
+    { type: 'person.create', subject: linus, data: { name: 'Linus Rivera', role: 'Program Director' } },
+
+    // People ↔ organizations (many-to-many). Ada is affiliated with two.
+    { type: 'link.add', subject: ada, data: { to: acme } },
+    { type: 'link.add', subject: ada, data: { to: northwind } },
+    { type: 'link.add', subject: grace, data: { to: northwind } },
+    { type: 'link.add', subject: linus, data: { to: river } },
 
     // Opportunities
     { type: 'opp.create', subject: opp1, data: { title: 'What if we sold Sync to research labs?', description: `Labs like ${mentionToken(acme, 'Acme Labs')} want offline-first shared notebooks. ${mentionToken(ada, 'Ada')} is the champion.` } },

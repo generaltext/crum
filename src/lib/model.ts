@@ -19,6 +19,12 @@ export interface FieldDef {
   placeholder?: string
 }
 
+/** A many-to-many relationship shown on the detail page, backed by bidirectional links. */
+export interface RelationDef {
+  kind: EntityKind
+  label: string
+}
+
 export interface KindDef {
   kind: EntityKind
   /** id prefix, e.g. 'per' → per_01J… */
@@ -31,6 +37,8 @@ export interface KindDef {
   /** hash route segment, e.g. 'people' */
   route: string
   fields: FieldDef[]
+  /** many-to-many relations (via links) editable from this kind's detail page */
+  relations?: RelationDef[]
 }
 
 export const KINDS: Record<EntityKind, KindDef> = {
@@ -44,11 +52,11 @@ export const KINDS: Record<EntityKind, KindDef> = {
     fields: [
       { key: 'name', label: 'Name', type: 'text', title: true, placeholder: 'Full name' },
       { key: 'role', label: 'Role', type: 'text', placeholder: 'Title or role' },
-      { key: 'org', label: 'Organization', type: 'ref', refKind: 'org' },
       { key: 'email', label: 'Email', type: 'email', placeholder: 'name@example.com' },
       { key: 'phone', label: 'Phone', type: 'text' },
       { key: 'about', label: 'About', type: 'rich' },
     ],
+    relations: [{ kind: 'org', label: 'Organizations' }],
   },
   org: {
     kind: 'org',
@@ -63,6 +71,7 @@ export const KINDS: Record<EntityKind, KindDef> = {
       { key: 'location', label: 'Location', type: 'text' },
       { key: 'about', label: 'About', type: 'rich' },
     ],
+    relations: [{ kind: 'person', label: 'People' }],
   },
   opp: {
     kind: 'opp',

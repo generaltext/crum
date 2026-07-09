@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useStore } from '../lib/store'
-import { entitiesOfKind, type EntityRecord } from '../lib/reducer'
+import { entitiesOfKind, linkedOfKind, type EntityRecord, type State } from '../lib/reducer'
 import { KINDS, tagColor, titleField, type EntityKind } from '../lib/model'
 import { bodyToPlain } from '../lib/mentions'
 import { formatMoney, relativeTime } from '../lib/format'
@@ -10,17 +10,25 @@ import { Avatar, Button, EmptyState } from '../components/common'
 import { TagChip } from '../components/TagEditor'
 import { Icon, type IconName } from '../components/Icon'
 
-function subtitle(rec: EntityRecord, resolve: (id: string) => string): string {
+function subtitle(rec: EntityRecord, state: State): string {
   const f = rec.fields
+  const nameOf = (id: string) => {
+    const e = state.entities[id]
+    return e ? String(e.fields[titleField(e.kind)] ?? '') : ''
+  }
   switch (rec.kind) {
-    case 'person':
-      return [f.role, f.org ? resolve(String(f.org)) : ''].filter(Boolean).join(' · ')
+    case 'person': {
+      const orgs = linkedOfKind(state, rec.id, 'org')
+        .map((o) => String(o.fields.name ?? ''))
+        .filter(Boolean)
+      return [f.role, orgs.join(', ')].filter(Boolean).join(' · ')
+    }
     case 'org':
       return [f.location, f.website].filter(Boolean).join(' · ')
     case 'opp':
       return bodyToPlain(String(f.description ?? '')).slice(0, 120)
     case 'deal':
-      return [f.value ? `$${formatMoney(Number(f.value))}` : '', f.org ? resolve(String(f.org)) : '']
+      return [f.value ? `$${formatMoney(Number(f.value))}` : '', f.org ? nameOf(String(f.org)) : '']
         .filter(Boolean)
         .join(' · ')
   }
@@ -35,8 +43,6 @@ export function EntityListPage({ kind }: { kind: EntityKind }) {
   const [creating, setCreating] = useState(false)
   const [name, setName] = useState('')
   const [showArchived, setShowArchived] = useState(false)
-
-  const resolve = (id: string) => String(state.entities[id]?.fields[titleField(state.entities[id]!.kind)] ?? '')
 
   const withArchived = entitiesOfKind(state, kind, true)
   const all = withArchived.filter((e) => !e.archived)
@@ -130,7 +136,7 @@ export function EntityListPage({ kind }: { kind: EntityKind }) {
         <ul className="rowlist">
           {rows.map((r) => {
             const title = String(r.fields[titleField(kind)] ?? '') || `Untitled ${def.singular}`
-            const sub = subtitle(r, resolve)
+            const sub = subtitle(r, state)
             return (
               <li key={r.id}>
                 <button
