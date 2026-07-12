@@ -1,7 +1,7 @@
 # Crum
 
 A clean, append-only CRM built as a [General Text](https://www.generaltext.org) app.
-Track people, organizations, opportunities, and deals — with notes and conversations
+Track people, organizations, opportunities, and deals, with notes and conversations
 attached to any of them, and a full who-did-what history for free.
 
 Built against the app guide: https://www.generaltext.org/llms.txt
@@ -57,5 +57,5 @@ Two design notes baked in from the plan review:
 - `v0/events/YYYY-MM.jsonl` — the append-only log (source of truth).
 - `v0/config.json` — pipeline stages + tag palette.
 
-Never edit a shard line in place — corrections are new events. That's what keeps merges
+Never edit a shard line in place; corrections are new events. That's what keeps merges
 clean and the cache correct.
