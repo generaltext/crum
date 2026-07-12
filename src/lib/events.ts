@@ -1,5 +1,5 @@
 // The event envelope. One JSON object per line in the log; immutable once
-// written. Every change to CRUM is an event of the form "<entity>.<verb>".
+// written. Every change to Crum is an event of the form "<entity>.<verb>".
 
 export interface Actor {
   id: string

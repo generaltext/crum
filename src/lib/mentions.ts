@@ -1,7 +1,7 @@
 // Rich text is stored as a portable plaintext string with inline mention
 // tokens: `@[Label](entityId)`. The label is a snapshot (so a deleted entity
 // still reads sensibly) and the id is the durable link. This keeps every
-// description/note/comment greppable and readable outside CRUM while still
+// description/note/comment greppable and readable outside Crum while still
 // letting the app render live links and resolve the current name.
 
 export interface TextSegment {

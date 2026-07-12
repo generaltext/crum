@@ -1,6 +1,6 @@
 import { Icon } from './Icon'
 
-// Shown when CRUM is opened outside General Text — no injected `window.gt` runtime
+// Shown when Crum is opened outside General Text — no injected `window.gt` runtime
 // (visiting the deployed site directly). A General Text app has no backend of its
 // own, so on its own there's nothing to read or write; point the visitor at how to
 // use it, and let them try a local sample-data demo right here.
@@ -18,19 +18,19 @@ export function MissingRuntime({ onTryDemo }: { onTryDemo: () => void }) {
             </svg>
           </span>
           <div className="leading-tight">
-            <h1 className="text-lg font-semibold tracking-tight">CRUM</h1>
+            <h1 className="text-lg font-semibold tracking-tight">Crum</h1>
             <p className="text-xs" style={{ color: 'var(--muted)' }}>A General Text app · a clean, append-only CRM</p>
           </div>
         </div>
 
         <p className="text-sm leading-relaxed" style={{ color: 'var(--muted)' }}>
-          CRUM runs <span style={{ color: 'var(--fg)', fontWeight: 500 }}>inside General Text</span>, a workspace
+          Crum runs <span style={{ color: 'var(--fg)', fontWeight: 500 }}>inside General Text</span>, a workspace
           for plaintext files that sync across your devices and team. Opened on its own like this, it has no
           workspace to read or write, so there's nothing to show yet.
         </p>
 
         <div className="space-y-2">
-          <p className="text-[11px] font-semibold uppercase tracking-wider" style={{ color: 'var(--muted)' }}>To use CRUM</p>
+          <p className="text-[11px] font-semibold uppercase tracking-wider" style={{ color: 'var(--muted)' }}>To use Crum</p>
           <ol className="space-y-1.5 text-sm" style={{ color: 'var(--muted)' }}>
             <Step n={1}>Open <Link href="https://www.generaltext.org">General Text</Link> and open a workspace.</Step>
             <Step n={2}>Go to <span style={{ color: 'var(--fg)' }}>Settings → Apps → Install by URL</span>.</Step>
@@ -38,7 +38,7 @@ export function MissingRuntime({ onTryDemo }: { onTryDemo: () => void }) {
               Paste this app's address:
               <code className="mt-1 block rounded px-2 py-1 font-mono text-xs" style={{ background: 'var(--hover)', color: 'var(--fg)' }}>{appUrl}</code>
             </Step>
-            <Step n={4}>Launch CRUM from your workspace.</Step>
+            <Step n={4}>Launch Crum from your workspace.</Step>
           </ol>
         </div>
 

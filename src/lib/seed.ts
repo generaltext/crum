@@ -38,7 +38,7 @@ export async function seedDemo(dispatch: (d: Draft[]) => Promise<void>): Promise
 
     // Opportunities
     { type: 'opp.create', subject: opp1, data: { title: 'What if we sold Sync to research labs?', description: `Labs like ${mentionToken(acme, 'Acme Labs')} want offline-first shared notebooks. ${mentionToken(ada, 'Ada')} is the champion.` } },
-    { type: 'opp.create', subject: opp2, data: { title: 'Bundle CRUM for nonprofits', description: 'Discounted tier for orgs like ' + mentionToken(river, 'Riverstone Foundation') + '.' } },
+    { type: 'opp.create', subject: opp2, data: { title: 'Bundle Crum for nonprofits', description: 'Discounted tier for orgs like ' + mentionToken(river, 'Riverstone Foundation') + '.' } },
 
     // Deals
     { type: 'deal.create', subject: deal1, data: { title: 'Acme — Team plan', value: 12000, org: acme, opp: opp1, stage: 'lead' } },

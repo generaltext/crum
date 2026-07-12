@@ -1,4 +1,4 @@
-# CRUM
+# Crum
 
 A clean, append-only CRM built as a [General Text](https://www.generaltext.org) app.
 Track people, organizations, opportunities, and deals — with notes and conversations

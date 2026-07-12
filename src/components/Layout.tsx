@@ -45,7 +45,7 @@ export function Layout() {
               <path d="M16.4 5.8 L19.2 4.6 L21.1 6.7 L19.7 8.9 L17 8.3 Z" />
             </svg>
           </span>
-          <span className="text-lg font-semibold tracking-tight">CRUM</span>
+          <span className="text-lg font-semibold tracking-tight">Crum</span>
         </div>
 
         <button

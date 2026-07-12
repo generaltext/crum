@@ -1,6 +1,6 @@
 {
   "name": "crum",
-  "displayName": "CRUM",
+  "displayName": "Crum",
   "version": "0.1.0",
   "gtApi": "^1.0",
   "blurb": "A clean, append-only CRM: contacts, opportunities, and deals you actually trust.",
