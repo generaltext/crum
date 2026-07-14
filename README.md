@@ -28,7 +28,7 @@ two tabs to watch edits merge. No account, no server. To test inside real Genera
 The source of truth is an **append-only event log**; the UI is a **materialized
 projection** rebuilt by folding it. An append-only JSONL log is the structure that
 merges cleanest under General Text's character-level CRDT, and it gives an audit trail
-and full history for nothing.
+and full history for nothing. 
 
 - **`lib/events.ts`** — the event envelope (`{ id, ts, actor, type, subject, data }`),
   one JSON line per change, `<entity>.<verb>`.
