@@ -1,8 +1,8 @@
 @import 'tailwindcss';
 
-:root {
-  color-scheme: light dark;
-}
+/* Theme follows the shell's `dark` class on <html> (lib/theme.ts mirrors
+   gt.theme); standalone/dev falls back to the OS via the same class. CSS keys off
+   the class so the SHELL — not the OS — wins, which is what an install must do. */
 
 html,
 body,
@@ -28,8 +28,10 @@ body {
   color: var(--fg);
 }
 
-/* Calm neutral surfaces, amber accent, auto light/dark. */
+/* Calm neutral surfaces, amber accent. Light default; dark under the shell's
+   `dark` class on <html> (see the note above). */
 :root {
+  color-scheme: light;
   --bg: #fafaf9;
   --panel: #ffffff;
   --fg: #1c1917;
@@ -39,17 +41,16 @@ body {
   --accent: #b45309;
   --accent-soft: #fef3c7;
 }
-@media (prefers-color-scheme: dark) {
-  :root {
-    --bg: #1c1917;
-    --panel: #262322;
-    --fg: #f5f5f4;
-    --muted: #a8a29e;
-    --border: #3a3634;
-    --hover: #302c2a;
-    --accent: #fbbf24;
-    --accent-soft: #422006;
-  }
+:root.dark {
+  color-scheme: dark;
+  --bg: #1c1917;
+  --panel: #262322;
+  --fg: #f5f5f4;
+  --muted: #a8a29e;
+  --border: #3a3634;
+  --hover: #302c2a;
+  --accent: #fbbf24;
+  --accent-soft: #422006;
 }
 
 /* ── mention chips (rendered + editor) ─────────────────────────────────────── */
@@ -82,10 +83,8 @@ body {
   border: 1px solid color-mix(in srgb, var(--tc) 25%, transparent);
   white-space: nowrap;
 }
-@media (prefers-color-scheme: dark) {
-  .tag {
-    color: color-mix(in srgb, var(--tc) 55%, white);
-  }
+:root.dark .tag {
+  color: color-mix(in srgb, var(--tc) 55%, white);
 }
 .tag-amber {
   --tc: #d97706;
