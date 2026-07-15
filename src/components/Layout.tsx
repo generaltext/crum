@@ -12,13 +12,14 @@ interface NavItem {
 }
 
 const NAV: NavItem[] = [
+  { to: '/dashboard', label: 'Overview', icon: 'LayoutDashboard' },
   ...KIND_LIST.map((k) => ({ to: `/${k.route}`, label: k.plural, icon: k.icon as IconName })),
   { to: '/tags', label: 'Tags', icon: 'Tag' },
   { to: '/activity', label: 'Activity', icon: 'Activity' },
 ]
 
 export function Layout() {
-  const { connected, me } = useStore()
+  const { connected } = useStore()
   const [cmdOpen, setCmdOpen] = useState(false)
 
   useEffect(() => {
@@ -79,9 +80,11 @@ export function Layout() {
         </nav>
 
         <div className="flex items-center gap-2 border-t px-4 py-3 text-xs" style={{ borderColor: 'var(--border)', color: 'var(--muted)' }}>
-          <Icon name={connected ? 'Wifi' : 'WifiOff'} size={13} />
-          <span>{connected ? 'Synced' : 'Offline'}</span>
-          {me && <span className="ml-auto truncate">{me.name}</span>}
+          <span
+            title={connected ? 'Synced' : 'Offline'}
+            className="inline-block h-2 w-2 shrink-0 rounded-full"
+            style={{ background: connected ? '#16a34a' : 'var(--muted)' }}
+          />
         </div>
       </aside>
 

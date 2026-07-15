@@ -86,7 +86,6 @@ export function applyEvent(state: State, ev: CrumEvent): void {
   switch (entity) {
     case 'org':
     case 'person':
-    case 'opp':
     case 'deal':
       applyEntity(state, ev, verb ?? '', data)
       break

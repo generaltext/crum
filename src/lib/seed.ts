@@ -12,8 +12,6 @@ export async function seedDemo(dispatch: (d: Draft[]) => Promise<void>): Promise
   const ada = newId('per')
   const grace = newId('per')
   const linus = newId('per')
-  const opp1 = newId('opp')
-  const opp2 = newId('opp')
   const deal1 = newId('deal')
   const deal2 = newId('deal')
   const note1 = newId('note')
@@ -36,24 +34,18 @@ export async function seedDemo(dispatch: (d: Draft[]) => Promise<void>): Promise
     { type: 'link.add', subject: grace, data: { to: northwind } },
     { type: 'link.add', subject: linus, data: { to: river } },
 
-    // Opportunities
-    { type: 'opp.create', subject: opp1, data: { title: 'What if we sold Sync to research labs?', description: `Labs like ${mentionToken(acme, 'Acme Labs')} want offline-first shared notebooks. ${mentionToken(ada, 'Ada')} is the champion.` } },
-    { type: 'opp.create', subject: opp2, data: { title: 'Bundle Crum for nonprofits', description: 'Discounted tier for orgs like ' + mentionToken(river, 'Riverstone Foundation') + '.' } },
-
     // Deals
-    { type: 'deal.create', subject: deal1, data: { title: 'Acme — Team plan', value: 12000, org: acme, opp: opp1, stage: 'lead' } },
+    { type: 'deal.create', subject: deal1, data: { title: 'Acme — Team plan', value: 12000, org: acme, stage: 'lead' } },
     { type: 'deal.stage_change', subject: deal1, data: { from: 'lead', to: 'proposal' } },
     { type: 'deal.create', subject: deal2, data: { title: 'Northwind pilot', value: 4000, org: northwind, stage: 'qualified' } },
 
     // Tags
     { type: 'tag.add', subject: ada, data: { label: 'priority' } },
     { type: 'tag.add', subject: acme, data: { label: 'research' } },
-    { type: 'tag.add', subject: opp1, data: { label: 'research' } },
     { type: 'tag.add', subject: river, data: { label: 'nonprofit' } },
-    { type: 'tag.add', subject: opp2, data: { label: 'nonprofit' } },
 
     // Notes + a comment thread
-    { type: 'note.create', subject: note1, data: { target: ada, body: `Kickoff call with ${mentionToken(ada, 'Ada')} about ${mentionToken(opp1, 'the labs idea')}. Very interested; wants a pilot in Q3.` } },
+    { type: 'note.create', subject: note1, data: { target: ada, body: `Kickoff call with ${mentionToken(ada, 'Ada')} about ${mentionToken(deal1, 'the Acme deal')}. Very interested; wants a pilot in Q3.` } },
     { type: 'comment.create', subject: newId('cmt'), data: { note: note1, body: 'Sent the pilot outline. Following up next week.' } },
     { type: 'note.create', subject: note2, data: { target: deal1, body: 'Proposal sent. Waiting on procurement sign-off.' } },
   ]

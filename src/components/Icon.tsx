@@ -9,6 +9,7 @@ import {
   CornerDownLeft,
   ExternalLink,
   Handshake,
+  LayoutDashboard,
   Lightbulb,
   MessageSquare,
   Pencil,
@@ -18,8 +19,6 @@ import {
   Trash2,
   User,
   Users,
-  Wifi,
-  WifiOff,
   X,
   type LucideProps,
 } from 'lucide-react'
@@ -35,6 +34,7 @@ const REGISTRY = {
   CornerDownLeft,
   ExternalLink,
   Handshake,
+  LayoutDashboard,
   Lightbulb,
   MessageSquare,
   Pencil,
@@ -44,8 +44,6 @@ const REGISTRY = {
   Trash2,
   User,
   Users,
-  Wifi,
-  WifiOff,
   X,
 }
 

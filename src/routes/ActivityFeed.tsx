@@ -17,11 +17,11 @@ function verbFor(singular: string): Record<string, string> {
   }
 }
 
-function describe(ev: CrumEvent, state: State): ReactNode {
+export function describe(ev: CrumEvent, state: State): ReactNode {
   const [entity, verb] = ev.type.split('.')
   const kind = kindOfId(ev.subject)
 
-  if (kind && (entity === 'org' || entity === 'person' || entity === 'opp' || entity === 'deal')) {
+  if (kind && (entity === 'org' || entity === 'person' || entity === 'deal')) {
     const sing = KINDS[kind].singular
     if (verb === 'stage_change') {
       return (

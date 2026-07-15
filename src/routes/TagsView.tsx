@@ -21,7 +21,7 @@ export function TagsView() {
       </header>
 
       {tags.length === 0 ? (
-        <EmptyState icon="Tag" title="No tags yet" hint="Add tags to people, orgs, opportunities, and deals to group them." />
+        <EmptyState icon="Tag" title="No tags yet" hint="Add tags to people, orgs, and deals to group them." />
       ) : (
         <div className="mb-6 flex flex-wrap gap-2">
           {tags.map((t) => (

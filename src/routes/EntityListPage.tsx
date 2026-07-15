@@ -3,7 +3,6 @@ import { useNavigate } from 'react-router-dom'
 import { useStore } from '../lib/store'
 import { entitiesOfKind, linkedOfKind, type EntityRecord, type State } from '../lib/reducer'
 import { KINDS, tagColor, titleField, type EntityKind } from '../lib/model'
-import { bodyToPlain } from '../lib/mentions'
 import { formatMoney, relativeTime } from '../lib/format'
 import { useCreateEntity } from '../components/useCreate'
 import { Avatar, Button, EmptyState } from '../components/common'
@@ -25,8 +24,6 @@ function subtitle(rec: EntityRecord, state: State): string {
     }
     case 'org':
       return [f.location, f.website].filter(Boolean).join(' · ')
-    case 'opp':
-      return bodyToPlain(String(f.description ?? '')).slice(0, 120)
     case 'deal':
       return [f.value ? `$${formatMoney(Number(f.value))}` : '', f.org ? nameOf(String(f.org)) : '']
         .filter(Boolean)

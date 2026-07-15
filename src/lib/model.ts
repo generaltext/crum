@@ -1,10 +1,10 @@
-// The entity model. Entity *kinds* (org/person/opp/deal) are declared here as
+// The entity model. Entity *kinds* (org/person/deal) are declared here as
 // data so views, forms, the command bar, and mention search are all driven by
 // one registry — adding a field is a one-line change, and a new kind is a new
 // entry plus a route. Notes and comments are separate record types (they attach
 // to entities and to each other), handled by the reducer directly.
 
-export type EntityKind = 'org' | 'person' | 'opp' | 'deal'
+export type EntityKind = 'org' | 'person' | 'deal'
 
 export type FieldType = 'text' | 'rich' | 'number' | 'email' | 'url' | 'ref' | 'stage'
 
@@ -73,18 +73,6 @@ export const KINDS: Record<EntityKind, KindDef> = {
     ],
     relations: [{ kind: 'person', label: 'People' }],
   },
-  opp: {
-    kind: 'opp',
-    prefix: 'opp',
-    singular: 'Opportunity',
-    plural: 'Opportunities',
-    icon: 'Lightbulb',
-    route: 'opportunities',
-    fields: [
-      { key: 'title', label: 'Title', type: 'text', title: true, placeholder: 'What if we…' },
-      { key: 'description', label: 'Description', type: 'rich' },
-    ],
-  },
   deal: {
     kind: 'deal',
     prefix: 'deal',
@@ -96,13 +84,12 @@ export const KINDS: Record<EntityKind, KindDef> = {
       { key: 'title', label: 'Title', type: 'text', title: true, placeholder: 'Deal name' },
       { key: 'value', label: 'Value', type: 'number', placeholder: '0' },
       { key: 'org', label: 'Organization', type: 'ref', refKind: 'org' },
-      { key: 'opp', label: 'Opportunity', type: 'ref', refKind: 'opp' },
       { key: 'description', label: 'Description', type: 'rich' },
     ],
   },
 }
 
-export const KIND_LIST: KindDef[] = [KINDS.person, KINDS.org, KINDS.opp, KINDS.deal]
+export const KIND_LIST: KindDef[] = [KINDS.person, KINDS.org, KINDS.deal]
 
 export function kindOfId(id: string): EntityKind | null {
   const p = id.slice(0, id.indexOf('_'))
