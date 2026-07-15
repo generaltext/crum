@@ -1,9 +1,9 @@
 {
   "name": "crum",
   "displayName": "Crum",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "gtApi": "^1.0",
-  "blurb": "A clean, append-only CRM: contacts, opportunities, and deals with full edit logs.",
+  "blurb": "A clean, append-only CRM: contacts, deals, and notes with full edit logs.",
   "color": "amber",
   "tags": ["crm", "contacts", "sales", "notes"],
   "icon": {
