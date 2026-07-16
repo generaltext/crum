@@ -61,14 +61,14 @@ export function EntityListPage({ kind }: { kind: EntityKind }) {
   }
 
   return (
-    <div className="mx-auto max-w-4xl px-6 py-6">
-      <header className="mb-5 flex items-center gap-3">
+    <div className="mx-auto max-w-4xl px-4 py-4 sm:px-6 sm:py-6">
+      <header className="mb-5 flex flex-wrap items-center gap-3">
         <Icon name={def.icon as IconName} size={20} style={{ color: 'var(--muted)' }} />
         <h1 className="text-xl font-semibold">{def.plural}</h1>
         <span className="text-sm" style={{ color: 'var(--muted)' }}>
           {all.length}
         </span>
-        <div className="ml-auto flex items-center gap-2">
+        <div className="ml-auto flex flex-1 items-center justify-end gap-2 sm:flex-none">
           {archivedCount > 0 && (
             <button
               type="button"
@@ -79,13 +79,13 @@ export function EntityListPage({ kind }: { kind: EntityKind }) {
               <Icon name="Archive" size={13} /> {showArchived ? 'Hide' : 'Show'} archived ({archivedCount})
             </button>
           )}
-          <div className="relative">
+          <div className="relative min-w-0 flex-1 sm:flex-none">
             <Icon name="Search" size={14} className="absolute left-2.5 top-1/2 -translate-y-1/2" style={{ color: 'var(--muted)' }} />
             <input
               value={query}
               onChange={(e) => setQuery(e.target.value)}
               placeholder="Filter…"
-              className="w-44 rounded-md border py-1.5 pl-8 pr-2 text-sm outline-none"
+              className="w-full rounded-md border py-1.5 pl-8 pr-2 text-sm outline-none sm:w-44"
               style={{ borderColor: 'var(--border)', background: 'var(--panel)' }}
             />
           </div>

@@ -69,7 +69,7 @@ export function ActivityFeed() {
   const events = [...state.events].reverse().slice(0, 200)
 
   return (
-    <div className="mx-auto max-w-2xl px-6 py-6">
+    <div className="mx-auto max-w-2xl px-4 py-4 sm:px-6 sm:py-6">
       <header className="mb-5 flex items-center gap-3">
         <Icon name="Activity" size={20} style={{ color: 'var(--muted)' }} />
         <h1 className="text-xl font-semibold">Activity</h1>

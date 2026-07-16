@@ -39,8 +39,8 @@ export function DealsBoard() {
     deals.filter((d) => stageOf(d) === stage.key).reduce((sum, d) => sum + (Number(d.fields.value) || 0), 0)
 
   return (
-    <div className="flex h-full flex-col px-6 py-6">
-      <header className="mb-4 flex items-center gap-3">
+    <div className="flex h-full flex-col px-4 py-4 sm:px-6 sm:py-6">
+      <header className="mb-4 flex flex-wrap items-center gap-3">
         <Icon name="Handshake" size={20} style={{ color: 'var(--muted)' }} />
         <h1 className="text-xl font-semibold">Deals</h1>
         <span className="text-sm" style={{ color: 'var(--muted)' }}>

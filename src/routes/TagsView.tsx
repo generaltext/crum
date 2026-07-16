@@ -14,7 +14,7 @@ export function TagsView() {
   const tags = allTags(state)
 
   return (
-    <div className="mx-auto max-w-3xl px-6 py-6">
+    <div className="mx-auto max-w-3xl px-4 py-4 sm:px-6 sm:py-6">
       <header className="mb-5 flex items-center gap-3">
         <Icon name="Tag" size={20} style={{ color: 'var(--muted)' }} />
         <h1 className="text-xl font-semibold">Tags</h1>

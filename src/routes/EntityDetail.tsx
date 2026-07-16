@@ -145,7 +145,7 @@ export function EntityDetail() {
 
   if (!rec) {
     return (
-      <div className="mx-auto max-w-3xl px-6 py-6">
+      <div className="mx-auto max-w-3xl px-4 py-4 sm:px-6 sm:py-6">
         <EmptyState icon="Search" title="Not found" hint="This record may have been removed." />
       </div>
     )
@@ -163,7 +163,7 @@ export function EntityDetail() {
   const scalarFields = def.fields.filter((f) => !f.title && f.type !== 'rich')
 
   return (
-    <div className="mx-auto max-w-3xl px-6 py-6">
+    <div className="mx-auto max-w-3xl px-4 py-4 sm:px-6 sm:py-6">
       {rec.archived && (
         <div className="mb-4 flex items-center gap-2 rounded-md border px-3 py-2 text-sm" style={{ borderColor: 'var(--border)', background: 'var(--hover)' }}>
           <Icon name="Archive" size={15} />

@@ -76,7 +76,7 @@ export function Dashboard() {
   const empty = d.deals.length === 0 && d.people.length === 0 && d.orgs.length === 0
   if (empty) {
     return (
-      <div className="mx-auto max-w-5xl px-6 py-6">
+      <div className="mx-auto max-w-5xl px-4 py-4 sm:px-6 sm:py-6">
         <EmptyState
           icon="LayoutDashboard"
           title="Nothing to show yet"
@@ -87,7 +87,7 @@ export function Dashboard() {
   }
 
   return (
-    <div className="mx-auto max-w-5xl px-6 py-6">
+    <div className="mx-auto max-w-5xl px-4 py-4 sm:px-6 sm:py-6">
       <header className="mb-5 flex items-center gap-3">
         <Icon name="LayoutDashboard" size={20} style={{ color: 'var(--muted)' }} />
         <h1 className="text-xl font-semibold">Overview</h1>

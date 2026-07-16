@@ -38,7 +38,7 @@ export function AppSkeleton() {
       </aside>
 
       <main className="min-w-0 flex-1 overflow-auto">
-        <div className="mx-auto max-w-4xl px-6 py-6">
+        <div className="mx-auto max-w-4xl px-4 py-4 sm:px-6 sm:py-6">
           <header className="mb-5 flex items-center gap-3">
             <Bar w={20} h={20} />
             <Bar w={120} h={22} />
